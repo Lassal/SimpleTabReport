@@ -40,27 +40,47 @@ public class TextReportWriter extends FileWriter {
 			if(!this.reportInfo.isReportTitlePrinted()) {
 				this.writeReportTitle();
 			}		
-			this.writePageHeader();
+			this.writePageHeader(false);
 		}
 		
 		// check if it fits in the current page
 		if(!this.fitInCurrentPage(section) ) {
 			this.closeCurrentPage();
-			this.writePageHeader();
+			this.writePageHeader(true);
 		}
 		
 		this.writeSection(section);
 		
 	}
 	
-	private void closeCurrentPage() {
-		// TODO Auto-generated method stub
+	private void closeCurrentPage() throws IOException {
+		int fillerLines = this.reportInfo.getEmptyLinesBeforeFooter();
+		
+		this.writeFooter(fillerLines);
+		
+	}
+
+
+	private void writeFooter(int emptyLinesBeforeFooter) throws IOException {
+		
+		if(this.pageFooter != null && this.pageFooter.length >0) {
+			this.writeSection(emptyLinesBeforeFooter, this.pageFooter);
+		}
+		
 		
 	}
 
 
 	private void writeSection(String...section) throws IOException {
+		this.writeSection(0, section);
+	}
+	
+	private void writeSection(int numberEmptyLinesBefore, String...section) throws IOException {
 		if(section != null) {
+			for(int i=0; i< numberEmptyLinesBefore; i++) {
+				this.write(this.getEmptyLine());
+				this.reportInfo.registerRowWriten();
+			}
 			for(String line: section) {
 				this.write(line + "\n");
 				this.reportInfo.registerRowWriten();
@@ -82,12 +102,17 @@ public class TextReportWriter extends FileWriter {
 	}
 
 
-	private void writePageHeader() throws IOException {
+	private void writePageHeader(boolean isFirstLine) throws IOException {
+		int emptyLinesBefore = isFirstLine ? 0 : 1;
 		
 		if(this.pageHeader != null && this.pageHeader.length >0) {
-			this.writeSection(this.pageHeader);
+			this.writeSection(emptyLinesBefore, this.pageHeader);
 		}
 		
+	}
+	
+	private String getEmptyLine() {
+		return "\n";
 	}
 
 

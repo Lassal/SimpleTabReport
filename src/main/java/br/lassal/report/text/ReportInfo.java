@@ -111,4 +111,8 @@ public class ReportInfo {
 	public boolean isFirstPage() {
 		return this.currentPage == 0;
 	}
+	
+	public int getEmptyLinesBeforeFooter() {
+		return this.pageRowSize - this.getCurrentPageRowsPrinted() - this.getCurrentPageFooterSize();
+	}
 }

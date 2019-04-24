@@ -49,8 +49,8 @@ public class TextReportWriterTest {
 		header[1] = "======            HEADER              =====";
 		header[2] = "-------------------------------------------";
 		
-		footer[0] = "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[";
-		footer[1] = "                 - END -                    ";
+		footer[0] = "[[[[[[[[[[[[[[  FOOTER   [[[[[[[[[[[[[[[[[";
+		footer[1] = "             - FOOTER END -                    ";
 		
 		try {
 			writer = new TextReportWriter(outputFile, options, header, footer);
@@ -58,7 +58,12 @@ public class TextReportWriterTest {
 			writer.writeText(new String[]{
 					"First line: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa",
 					"Second line: BBBBBBBBBBBBBB .. .. . .. . . dkdkd",
-					"Third line: CADADDAD ADD ddddd ----------  dsls "
+					"Third line: CADADDAD ADD ddddd ----------  dsls ",
+					"44444444444444444444444444444---------",
+					"5555555555555555555555555............",
+					"66666666666666666666666666666666666666666",
+					"77777777777777777777777777777777777777777",
+					"8888888888888888888888888888888888888888888"
 					});
 			
 			
